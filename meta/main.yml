@@ -1,6 +1,6 @@
 galaxy_info:
   author: Magnus Glantz
-  description: Role which adds HA capability to an EDA server
+  description: Role which adds HA capability to an EDA server setup
   company: Red Hat
 
   # If the issue tracker for your role is not on github, uncomment the
