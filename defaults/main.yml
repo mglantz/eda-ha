@@ -1,0 +1,4 @@
+---
+# defaults file for eda-ha
+load_balancer_fqdn: loadbalancer.change.me
+eda_fqdn: eda.change.me
