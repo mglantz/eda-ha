@@ -40,12 +40,12 @@ Example Playbook
 An example of how to use the role.
 In the action taking playbooks, the ones triggered by EDA events, adjust them as follows:
 ```
-- name: Event-driven action playbook
+- name: Detect which EDA server is active and set eda_activation accordingly
   hosts: localhost
   roles:
     - { role: eda-ha, load_balancer_fqdn: "loadbalancer.sudo.net", eda_fqdn: "eda.sudo.net" }
 
-- name: Action taking play
+- name: Action taking play, for when eda_activation is set
   hosts: all
   tasks:
     - name: Fix web server if event detects it broken
