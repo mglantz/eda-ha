@@ -5,6 +5,8 @@ A role which provides high availability for a Event Driven Ansible server.
 It requires you to setup two or more independent EDA servers and put a load balancer infront of them.
 Load balancer needs to do active-passive balancing between your EDA servers.
 
+![Overview](eda-ha.png
+
 As you create playbooks which runs as actions to events, you include this role as shown in the example and depend tasks on the eda_activation boolean.
 This will ensure that actions are only taken when an EDA server is "activated", meaning, the one getting load balanced to.
 
