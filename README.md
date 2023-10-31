@@ -2,7 +2,11 @@ Role Name
 =========
 
 A role which provides high availability for a Event Driven Ansible server.
-For more details see: https://github.com/mglantz/eda-ha/
+It requires you to setup two or more independent EDA servers and put a load balancer infront of them.
+Load balancer needs to do active-passive balancing between your EDA servers.
+
+As you create playbooks which runs as actions to events, you include this role as shown in the example and depend tasks on the eda_activation boolean.
+This will ensure that actions are only taken when an EDA server is "activated", meaning, the one getting load balanced to.
 
 Requirements
 ------------
@@ -23,12 +27,15 @@ eda_fqdn: <string|fqdn of eda server>
 Dependencies
 ------------
 
-An installed instance of https://github.com/ansible/eda-server
+* Two or more installed instance of https://github.com/ansible/eda-server or Red Hat Ansible Automation Platform with EDA controller.
+* A load balancer
+* Adjusted action taking playbooks
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+An example of how to use the role.
+In the action taking playbooks, the ones triggered by EDA events, adjust them as follows:
 ```
 - name: Event-driven action playbook
   hosts: all
