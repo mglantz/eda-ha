@@ -1,30 +1,30 @@
 ---
 # tasks file for eda-ha
-- name: Set eda active to be default off
+- name: Set eda_activation to be default off
   ansible.builtin.set_fact:
     eda_activation: False
 
-- name: Fetch local eda install id
+- name: Fetch local EDA install id
   ansible.builtin.uri:
     url: https://{{ eda_fqdn }}/static/media/detect.json
     validate_certs: "{{ validate_eda_tls_cert }}"
   register: local_cluster
 
-- name: Local eda install id
+- name: Local EDA install id
   ansible.builtin.debug:
     msg: "{{ local_cluster.json.install_id }}"
 
-- name: Fetch eda id via the load balancer
+- name: Fetch EDA id via the load balancer
   ansible.builtin.uri:
     url: https://{{ load_balancer_fqdn }}/static/media/detect.json
     validate_certs: "{{ validate_eda_tls_cert }}"
   register: ldb_cluster
 
-- name: Load balancer install id
+- name: EDA load balancer install id
   ansible.builtin.debug:
     msg: "{{ ldb_cluster.json.install_id }}"
 
-- name: Set schedule mode depending on if we are active cluster or not
+- name: Set eda_activation depending on if we the active cluster or not
   ansible.builtin.set_fact:
     eda_activation: True
   when: local_cluster.json.install_id in ldb_cluster.json.install_id
