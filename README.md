@@ -5,12 +5,12 @@ A role which provides high availability for an Event Driven Ansible (EDA) server
 It requires you to setup two or more independent EDA servers and put a load balancer infront of them.
 Load balancer needs to do active-passive balancing between your EDA servers, meaning that B only gets traffic if A fails, etc.
 
+Rulebooks running in the EDA server triggers playbooks exposed as job_templates in your AAP Controllers. As you create the playbooks which performs your actions - you include this role as shown in the example and depend tasks in the playbooks on the provided eda_activation boolean. If this boolean is true, that means the EDA server in question is active, if it's not, it means it's passive and no tasks should be run. So actions are only taken when an EDA server is "activated", meaning, the one getting load balanced to.
+
+Fail-over between active and passive will be at the speed that the load balancer detects an outage, normally around a second. This is as the only difference between EDA Server A and B and corresponding AAP Controllers, is that tasks only get executed when triggered from the active EDA server. No configuration differs on the EDA server side.
+
+Once you have read through below documentation and look at the role's tasks/mail.yml, below picture will make sense.
 ![See architectural overview on GitHub if broken](https://github.com/mglantz/eda-ha/blob/main/eda-ha.png)
-
-As you create playbooks which runs as actions to events (which likely will be connected to job_templates), you include this role as shown in the example and depend tasks in the playbooks on the eda_activation boolean. If this boolean is true, that means the EDA server in question is active, if it's not, it means it's passive and no tasks should be run. So actions are only taken when an EDA server is "activated", meaning, the one getting load balanced to.
-
-Fail-over between active and passive will be at the speed that the load balancer detects an outage, normally around a second. 
-This is as the only difference between EDA Server A and B and corresponding AAP Controllers, is that tasks only get executed when triggered from the active EDA server. No configuration differs on the EDA server side.
 
 Install role using:
 ```
