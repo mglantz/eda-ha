@@ -83,3 +83,4 @@ Author Information
 ------------------
 
 Magnus Glantz, sudo at redhat.com, 2023
+Roberto Nunez, rnunez at redhat.com, 2023
