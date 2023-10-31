@@ -1,4 +1,4 @@
-Role Name
+mglantz.eda-ha
 =========
 
 A role which provides high availability for a Event Driven Ansible server.
