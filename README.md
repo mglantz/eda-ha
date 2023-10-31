@@ -7,25 +7,36 @@ Load balancer needs to do active-passive balancing between your EDA servers.
 
 ![Overview](eda-ha.png)
 
-As you create playbooks which runs as actions to events, you include this role as shown in the example and depend tasks on the eda_activation boolean.
-This will ensure that actions are only taken when an EDA server is "activated", meaning, the one getting load balanced to.
+As you create playbooks which runs as actions to events (which likely will be connected to job_templates), you include this role as shown in the example and depend tasks in the playbooks on the eda_activation boolean. If this boolean is true, that means the EDA server in question is active, if it's not, it means it's passive and no tasks should be run. So actions are only taken when an EDA server is "activated", meaning, the one getting load balanced to.
 
-Fail-over between active and passive will be at the speed that the load balancer detects an outage, normally around a second.
+Fail-over between active and passive will be at the speed that the load balancer detects an outage, normally around a second. 
+This is as the only difference between EDA Server A and B and corresponding AAP Controllers, is that tasks only get executed when triggered from the active EDA server. No configuration differs on the EDA server side.
 
-Install using:
+Install role using:
 ```
 ansible-galaxy role install mglantz.eda-ha
 ```
 
+To use this role in your playbooks, create a requirements.yml file which you put in your roles directory.
+The requirements.yml file needs to state:
+```
+---    
+- name: mglantz.eda-ha
+```
+Example of this can be seen here: https://github.com/mglantz/event-driven-ansible-demo/
+
 Requirements
 ------------
 
-Create the file: /var/lib/ansible-automation-platform/eda/ui/static/media/detect.json on each EDA server, as follows:
+* Create the file: /var/lib/ansible-automation-platform/eda/ui/static/media/detect.json on each EDA server, as follows:
 ```
 {
    "install_id": "unique_id_that_you_make_up_fqdn_perhaps"
 }
 ```
+* Two or more installed instance of Red Hat Ansible Automation Platform 2.4 with EDA controller, or perhaps https://github.com/ansible/eda-server (upstream eda-server has not been tested though).
+* A load balancer, configured to do active-passive load balancing.
+* Adjusted playbooks as described below, which makes use of this role.
 
 Role Variables
 --------------
@@ -44,9 +55,7 @@ validate_eda_tls_cert: <bool|true/false>
 Dependencies
 ------------
 
-* Two or more installed instance of https://github.com/ansible/eda-server or Red Hat Ansible Automation Platform with EDA controller.
-* A load balancer, configured to do active-passive load balancing.
-* Adjusted action taking playbooks
+
 
 Example Playbook
 ----------------
@@ -55,6 +64,7 @@ An example of how to use the role.
 In the action taking playbooks, the ones triggered by EDA events, adjust them as follows:
 ```
 ---
+# Below play needs to be in the top of your playbooks
 - name: Detect which EDA server is active and set eda_activation accordingly
   hosts: localhost
   roles:
@@ -63,11 +73,13 @@ In the action taking playbooks, the ones triggered by EDA events, adjust them as
 - name: Site is up
   hosts: all
   vars:
+# Below variable needs to be added to the play which does your actual actions
     eda_activation: "{{ hostvars['localhost']['eda_activation'] }}"
   gather_facts: false
   tasks:
     - debug:
         msg: "All is up and well"
+# Add below when statement for tasks that you want to control or equivalent for a block statement
       when: eda_activation
 
     - name: Do something else
