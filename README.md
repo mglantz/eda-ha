@@ -8,6 +8,8 @@ Load balancer needs to do active-passive balancing between your EDA servers.
 As you create playbooks which runs as actions to events, you include this role as shown in the example and depend tasks on the eda_activation boolean.
 This will ensure that actions are only taken when an EDA server is "activated", meaning, the one getting load balanced to.
 
+Fail-over between active and passive will be at the speed that the load balancer detects an outage, normally around a second.
+
 Requirements
 ------------
 
