@@ -31,12 +31,12 @@ galaxy_info:
    - name: Fedora
      versions:
      - all
-   - name: RedHat
+   - name: EL
      versions:
      - 8
      - 9
 
-  galaxy_tags: [eda-server]
+  galaxy_tags: eda-server
     # List tags for your role here, one per line. A tag is a keyword that describes
     # and categorizes the role. Users find roles by searching for tags. Be sure to
     # remove the '[]' above, if you add tags to this list.
