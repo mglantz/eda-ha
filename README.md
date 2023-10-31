@@ -40,7 +40,7 @@ In the action taking playbooks, the ones triggered by EDA events, adjust them as
 - name: Event-driven action playbook
   hosts: all
   roles:
-    - { role: eda-ha, load_balancer_fqdn: "loadbalancer.sudo.net", eda_fqdn: "eda.sudo.net" }
+    - { role: mglantz.eda-ha, load_balancer_fqdn: "loadbalancer.sudo.net", eda_fqdn: "eda.sudo.net" }
   tasks:
     - name: Fix web server if event detects it broken
       ansible.builtin.debug:
