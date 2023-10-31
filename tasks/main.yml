@@ -7,7 +7,7 @@
 - name: Fetch local eda install id
   ansible.builtin.uri:
     url: https://{{ eda_fqdn }}/static/media/detect.json
-    validate_certs: false
+    validate_certs: "{{ validate_eda_tls_cert }}"
   register: local_cluster
 
 - name: Local eda install id
@@ -17,7 +17,7 @@
 - name: Fetch eda id via the load balancer
   ansible.builtin.uri:
     url: https://{{ load_balancer_fqdn }}/static/media/detect.json
-    validate_certs: false
+    validate_certs: "{{ validate_eda_tls_cert }}"
   register: ldb_cluster
 
 - name: Load balancer install id

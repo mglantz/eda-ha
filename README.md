@@ -28,8 +28,15 @@ Create the file: /var/lib/ansible-automation-platform/eda/ui/static/media/detect
 Role Variables
 --------------
 ```
+# domain name of load balancer in front of EDA servers
 load_balancer_fqdn: <string|fqdn of load balancer> 
+
+# domain name of eda server, suggestion, if AAP, set in job_template
 eda_fqdn: <string|fqdn of eda server>
+
+# if we are to validate https certificate. if set to true, all EDA servers needs to have valid certs
+# also includes connection via load balancer
+validate_eda_tls_cert: <bool|true/false>
 ```
 
 Dependencies

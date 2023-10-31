@@ -2,3 +2,7 @@
 # defaults file for eda-ha
 load_balancer_fqdn: loadbalancer.change.me
 eda_fqdn: eda.change.me
+
+# change this to validate the https certificate on the EDA servers (also via the load balancer)
+# if true, all EDA servers needs to have valid https certificates
+validate_eda_tls_cert: false
