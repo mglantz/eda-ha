@@ -10,6 +10,11 @@ This will ensure that actions are only taken when an EDA server is "activated", 
 
 Fail-over between active and passive will be at the speed that the load balancer detects an outage, normally around a second.
 
+Install using:
+```
+ansible-galaxy role install mglantz.eda-ha
+```
+
 Requirements
 ------------
 
@@ -43,7 +48,7 @@ In the action taking playbooks, the ones triggered by EDA events, adjust them as
 - name: Detect which EDA server is active and set eda_activation accordingly
   hosts: localhost
   roles:
-    - { role: eda-ha, load_balancer_fqdn: "loadbalancer.sudo.net", eda_fqdn: "eda.sudo.net" }
+    - { role: mglantz.eda-ha, load_balancer_fqdn: "loadbalancer.sudo.net", eda_fqdn: "eda.sudo.net" }
 
 - name: Action taking play, for when eda_activation is set
   hosts: all
