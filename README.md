@@ -52,17 +52,20 @@ Example Playbook
 An example of how to use the role.
 In the action taking playbooks, the ones triggered by EDA events, adjust them as follows:
 ```
+---
 - name: Detect which EDA server is active and set eda_activation accordingly
   hosts: localhost
   roles:
     - { role: mglantz.eda-ha, load_balancer_fqdn: "loadbalancer.sudo.net", eda_fqdn: "eda.sudo.net" }
 
-- name: Action taking play, for when eda_activation is set
+- name: Site is up
   hosts: all
+  vars:
+    eda_activation: "{{ hostvars['localhost']['eda_activation'] }}"
+  gather_facts: false
   tasks:
-    - name: Fix web server if event detects it broken
-      ansible.builtin.debug:
-        msg: "Imaginary fix"
+    - debug:
+        msg: "All is up and well"
       when: eda_activation
 
     - name: Do something else
