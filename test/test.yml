@@ -1,0 +1,46 @@
+---
+# tasks file for eda-ha
+# assumes creation of /var/lib/ansible-automation-platform/eda/ui/static/media/detect.json
+# on each eda server as follows:
+# {
+#    "install_id": "unique_id_that_you_make_up_fqdn_perhaps"
+# }
+
+- name: eda-ha test
+  hosts: all
+  vars:
+    eda_fqdn: "eda.sudo.net"
+    load_balancer_fqdn: "loadbalancer.sudo.net"
+  tasks:
+    - name: Set eda active to be default off
+      set_fact:
+        eda_activation: False
+
+    - name: Fetch local eda install id
+      uri:
+        url: https://{{ eda_fqdn }}/static/media/detect.json
+        validate_certs: false
+      register: local_cluster
+
+    - name: Local eda install id
+      debug:
+        msg: "{{ local_cluster.json.install_id }}"
+      
+    - name: Fetch eda id via the load balancer
+      uri:
+        url: https://{{ load_balancer_fqdn }}/static/media/detect.json
+        validate_certs: false
+      register: ldb_cluster
+        
+    - name: Load balancer install id
+      debug:
+        msg: "{{ ldb_cluster.json.install_id }}"
+
+    - name: Set schedule mode depending on if we are active cluster or not
+      set_fact:
+        eda_activation: True
+      when: local_cluster.json.install_id in ldb_cluster.json.install_id
+
+    - name: Print activation mode
+      debug:
+        msg: "eda_activation: {{ eda_activation }}"
