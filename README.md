@@ -78,13 +78,15 @@ In the action taking playbooks, the ones triggered by EDA events, adjust them as
   tasks:
     - debug:
         msg: "All is up and well"
-# Add below when statement for tasks that you want to control or equivalent for a block statement
+# Add below when statement for task that you want to control
       when: eda_activation
 
-    - name: Do something else
-      ansible.builtin.debug:
-        msg: "Imaginary something else"
-      when: eda_activation
+# Or similiar for a block
+    - block: 
+      - name: Do something else
+        ansible.builtin.debug:
+          msg: "Imaginary something else"
+    when: eda_activation
 ```
 
 License
