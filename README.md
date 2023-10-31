@@ -3,7 +3,7 @@ mglantz.eda-ha
 
 A role which provides high availability for a Event Driven Ansible server.
 It requires you to setup two or more independent EDA servers and put a load balancer infront of them.
-Load balancer needs to do active-passive balancing between your EDA servers.
+Load balancer needs to do active-passive balancing between your EDA servers, meaning that B only gets traffic if A fails, etc.
 
 ![See architectural overview on GitHub if broken](https://github.com/mglantz/eda-ha/blob/main/eda-ha.png)
 
