@@ -54,8 +54,7 @@ validate_eda_tls_cert: <bool|true/false>
 
 Dependencies
 ------------
-
-
+Ansible 2.9 or 2.14.
 
 Example Playbook
 ----------------
