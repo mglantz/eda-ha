@@ -63,7 +63,8 @@ An example of how to use the role.
 In the action taking playbooks, the ones triggered by EDA events, adjust them as follows:
 ```
 ---
-# Below play needs to be in the top of your playbooks
+# Below play needs to be in the top of your playbooks.
+# It makes sense to set the eda_fqdn variable on the job_template level
 - name: Detect which EDA server is active and set eda_activation accordingly
   hosts: localhost
   roles:
