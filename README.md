@@ -39,7 +39,7 @@ Requirements
 ```
 When the role assertains which EDA server is active and which ones are passive, it does so by matching the install_id it finds when contacting an EDA server directly and the one it finds when going via the load balancer.
 
-* Adjusted playbooks as described below, which makes use of this role.
+* Adjusted action taking playbooks as in the ```Example Playbook``` section below, which makes use of this role.
 
 Role Variables
 --------------
