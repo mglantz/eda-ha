@@ -86,6 +86,9 @@ In the action taking playbooks, the ones triggered by EDA events, adjust them as
       - name: Do something else
         ansible.builtin.debug:
           msg: "Imaginary something else"
+      - name: Also do this
+        ansible.builtin.debug:
+          msg: "Also this thing (imaginary)"
       when: eda_activation
 ```
 
