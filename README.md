@@ -28,7 +28,9 @@ Example of this can be seen here: https://github.com/mglantz/event-driven-ansibl
 Requirements
 ------------
 * Two or more installed instance of Red Hat Ansible Automation Platform 2.4 with EDA controller, or perhaps https://github.com/ansible/eda-server (upstream eda-server has not been tested though).
+
 * A load balancer, configured to do active-passive load balancing to the installed EDA servers.
+
 * Create the file: /var/lib/ansible-automation-platform/eda/ui/static/media/detect.json on _each EDA server_, as follows:
 ```
 {
@@ -36,6 +38,7 @@ Requirements
 }
 ```
 When the role assertains which EDA server is active and which ones are passive, it does so by matching the install_id it finds when contacting an EDA server directly and the one it finds when going via the load balancer.
+
 * Adjusted playbooks as described below, which makes use of this role.
 
 Role Variables
