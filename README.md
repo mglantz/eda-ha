@@ -9,7 +9,7 @@ Rulebooks running in the EDA server triggers playbooks exposed as job_templates 
 
 Fail-over between active and passive will be at the speed that the load balancer detects an outage, normally around a second. This is as the only difference between EDA Server A and B and corresponding AAP Controllers, is that tasks only get executed when triggered from the active EDA server. No configuration differs on the EDA server side.
 
-Once you have read through below documentation and look at the role's tasks/mail.yml, below picture will make sense.
+Once you have read through below documentation and look at the role's tasks/main.yml, below picture will make sense.
 ![See architectural overview on GitHub if broken](https://github.com/mglantz/eda-ha/blob/main/eda-ha.png)
 
 Install role using:
